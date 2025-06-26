@@ -1,0 +1,61 @@
+$lightThemeBackgroundColor: #f2f2f2;
+$lightThemeFontColor: #292929;
+$lightThemePrimaryColor: #2a7000;
+
+$darkThemeBackgroundColor: #1d1d1d;
+$darkThemeFontColor: #fefefe;
+
+$mediaXS: 0;
+$mediaSM: 576px;
+$mediaMD: 768px;
+$mediaLG: 992px;
+$mediaXL: 1200px;
+$mediaXXL: 1400px;
+
+$grid-columns: 12;
+$grid-breakpoints: (
+    "xs": $mediaXS,
+    "sm": $mediaSM,
+    "md": $mediaMD,
+    "lg": $mediaLG,
+    "xl": $mediaXL,
+    "xxl": $mediaXXL
+);
+
+@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+    $min: map-get($breakpoints, $name);
+    @return if($min != 0, $min, null);
+}
+
+@mixin media-breakpoint($name, $breakpoints: $grid-breakpoints) {
+    $min: breakpoint-min($name, $breakpoints);
+    @if $min {
+        @media (min-width: $min) {
+            @content;
+        }
+    } @else {
+        @content;
+    }
+}
+
+@mixin make-cssgrid($columns: $grid-columns, $breakpoints: $grid-breakpoints) {
+    @each $breakpoint in map-keys($breakpoints) {
+        $infix: if(breakpoint-min($breakpoint, $breakpoints) == null, "", "-#{$breakpoint}");
+
+        @include media-breakpoint($breakpoint, $breakpoints) {
+            @if $columns > 0 {
+                @for $i from 1 through $columns {
+                    .g-col#{$infix}-#{$i} {
+                        grid-column: auto / span $i;
+                    }
+                }
+
+                @for $i from 1 through ($columns - 1) {
+                    .g-start#{$infix}-#{$i} {
+                      grid-column-start: $i;
+                    }
+                }
+            }
+        }
+    }
+}
