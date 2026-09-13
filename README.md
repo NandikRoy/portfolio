@@ -7,7 +7,7 @@ This website showcases my work, projects, certifications, and the services I off
 
 ## 🌐 Live Demo
 
-Visit the live site: [nandikroy.in](https://nandikroy.in)
+Visit the live site: [tinyurl.com/nandikroy](https://tinyurl.com/nandikroy)
 
 ---
 
